@@ -1,6 +1,7 @@
-import React from "react";
+import { useRef } from "react";
 import "./work.scss";
 function Work() {
+  const form = useRef(null);
   return (
     <>
       <div className="container">
@@ -10,7 +11,17 @@ function Work() {
             <h1>There is no one</h1>
             <h2>who loves pain</h2>
           </div>
-          <div className="firstBtn">FORM</div>
+          <div
+            className="firstBtn"
+            onClick={() => {
+              window.scrollTo({
+                top: form.current.offsetTop,
+                behavior: "smooth",
+              });
+            }}
+          >
+            FORM
+          </div>
           <div className="firstMain">
             <h2>paragraph</h2>
             <p>1.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -36,29 +47,39 @@ function Work() {
           {/* </div> */}
         </div>
         <div className="waves" />
-        <div className="second">
-          <form>
+        <div className="second" ref={form}>
+          <form id="form1">
             <fieldset>
               <legend>FORM</legend>
               <div className="content">
                 <label htmlFor="">store</label>
-                <select name="" id=""></select>
+                <select name="" id="" required>
+                  <option value="">請選擇商店</option>
+                  <option value="">1</option>
+                </select>
               </div>
               <div className="content">
                 <label htmlFor="">name</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  placeholder="請輸入姓名"
+                  required
+                  pattern="[a-z,A-Z,\u4E00-\u9FA5]"
+                />
               </div>
               <div className="content">
                 <label htmlFor="">phone</label>
-                <input type="text" />
+                <input type="text" placeholder="請輸入電話" required />
               </div>
               <div className="content">
                 <label htmlFor="">Amount of consumption</label>
-                <input type="text" />
+                <input type="text" placeholder="請輸入" required />
               </div>
               <div className="content">
                 <label htmlFor="">payment</label>
-                <select name="" id=""></select>
+                <select name="" id="" required>
+                  <option value="">請選擇付款方式</option>
+                </select>
               </div>
             </fieldset>
             <button>submit</button>
