@@ -1,7 +1,74 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./work.scss";
 function Work() {
+  const [inputForm, setInputForm] = useState({
+    name: "",
+    phone: "",
+    amount: "",
+    store: "",
+    pay: "",
+  });
+  //存放錯誤訊息
+  const [errorMes, setErrorMes] = useState({
+    name: "",
+    phone: "",
+    amount: "",
+    store: "",
+    pay: "",
+  });
   const form = useRef(null);
+  //只能輸入中文英文
+  const nameVerify = /^[\u4e00-\u9fa5]+$|^[a-zA-Z\s]+$/;
+  //只能輸入數字
+  const num = /^[0-9]+$/;
+  const phoneFormat = /^09[0-9]{8}$/;
+  const post = (e) => {
+    setErrorMes({
+      ...errorMes,
+      [e.target.name]: "",
+    });
+    setInputForm({ ...inputForm, [e.target.name]: e.target.value });
+  };
+  const submit = (e) => {
+    e.preventDefault();
+  };
+  const invalid = (e) => {
+    e.preventDefault();
+    const { name, phone, amount } = inputForm;
+    if (name === "") {
+      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
+    } else {
+      if (!nameVerify.test(name)) {
+        setErrorMes({ ...errorMes, name: "只能輸入中、英文" });
+        return;
+      }
+    }
+    if (phone === "") {
+      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
+    } else {
+      if (!num.test(phone)) {
+        setErrorMes({ ...errorMes, phone: "只能輸入數字" });
+        return;
+      }
+      if (!phoneFormat.test(phone) && phone.length < 10) {
+        setErrorMes({ ...errorMes, phone: "格式不正確，例：0987654321" });
+        return;
+      }
+    }
+    if (amount === "") {
+      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
+    } else {
+      const newAmount = +amount;
+      if (newAmount < 0) {
+        setErrorMes({ ...errorMes, amount: "最小只能輸入0" });
+        return;
+      }
+      if (!num.test(amount)) {
+        setErrorMes({ ...errorMes, amount: "只能輸入數字" });
+        return;
+      }
+    }
+  };
   return (
     <>
       <div className="container">
@@ -48,12 +115,12 @@ function Work() {
         </div>
         <div className="waves" />
         <div className="second" ref={form}>
-          <form id="form1">
+          <form id="form1" onInvalid={invalid} onSubmit={submit}>
             <fieldset>
               <legend>FORM</legend>
               <div className="content">
                 <label htmlFor="">store</label>
-                <select name="" id="" required>
+                <select name="store" id="" required>
                   <option value="">請選擇商店</option>
                   <option value="">1</option>
                 </select>
@@ -64,20 +131,40 @@ function Work() {
                   type="text"
                   placeholder="請輸入姓名"
                   required
-                  pattern="[a-z,A-Z,\u4E00-\u9FA5]"
+                  name="name"
+                  value={inputForm.name}
+                  onChange={(e) => post(e)}
                 />
+                <span>{errorMes.name}</span>
               </div>
               <div className="content">
                 <label htmlFor="">phone</label>
-                <input type="text" placeholder="請輸入電話" required />
+                <input
+                  type="tel"
+                  placeholder="請輸入電話"
+                  required
+                  name="phone"
+                  value={inputForm.phone ? inputForm.phone : ""}
+                  maxLength={10}
+                  onChange={(e) => post(e)}
+                />
+                <span>{errorMes.phone}</span>
               </div>
               <div className="content">
                 <label htmlFor="">Amount of consumption</label>
-                <input type="text" placeholder="請輸入" required />
+                <input
+                  type="text"
+                  placeholder="請輸入數量"
+                  required
+                  name="amount"
+                  value={inputForm.amount ? inputForm.amount : ""}
+                  onChange={(e) => post(e)}
+                />
+                <span>{errorMes.amount}</span>
               </div>
               <div className="content">
                 <label htmlFor="">payment</label>
-                <select name="" id="" required>
+                <select name="pay" id="" required>
                   <option value="">請選擇付款方式</option>
                 </select>
               </div>
