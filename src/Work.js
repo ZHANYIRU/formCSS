@@ -34,7 +34,7 @@ function Work() {
   };
   const invalid = (e) => {
     e.preventDefault();
-    const { name, phone, amount } = inputForm;
+    const { name, phone, amount, pay, store } = inputForm;
     if (name === "") {
       setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
     } else {
@@ -67,6 +67,12 @@ function Work() {
         setErrorMes({ ...errorMes, amount: "只能輸入數字" });
         return;
       }
+    }
+    if (pay === "") {
+      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
+    }
+    if (store === "") {
+      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
     }
   };
   return (
@@ -120,10 +126,11 @@ function Work() {
               <legend>FORM</legend>
               <div className="content">
                 <label htmlFor="">store</label>
-                <select name="store" id="" required>
+                <select name="store" id="" required onChange={(e) => post(e)}>
                   <option value="">請選擇商店</option>
-                  <option value="">1</option>
+                  <option value="1">1</option>
                 </select>
+                <span>{errorMes.store}</span>
               </div>
               <div className="content">
                 <label htmlFor="">name</label>
@@ -164,9 +171,12 @@ function Work() {
               </div>
               <div className="content">
                 <label htmlFor="">payment</label>
-                <select name="pay" id="" required>
+                <select name="pay" id="" required onChange={(e) => post(e)}>
                   <option value="">請選擇付款方式</option>
+                  <option value="digital payment">digital payment</option>
+                  <option value="ATM">ATM</option>
                 </select>
+                <span>{errorMes.pay}</span>
               </div>
             </fieldset>
             <button>submit</button>
