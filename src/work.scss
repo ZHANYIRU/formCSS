@@ -10,7 +10,7 @@
   align-items: center;
   width: 100%;
   height: 634px;
-  padding: 60px 24px 8px;
+  padding: 60px 24px 40px;
   background: url("../public/img/白色海浪.png") center bottom no-repeat,
     url("../public/img/底色.png") center center no-repeat;
   background-size: 1920px 600px, 1920px 634px;
@@ -55,6 +55,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
   h2 {
     line-height: 125%;
     font-weight: 700;
@@ -88,6 +89,133 @@
   span {
     font-weight: 600;
     text-decoration: underline;
+  }
+}
+.sup{
+  width: 80px;
+  height: 64px;
+  background: url('../public/img/sup.png') no-repeat center center;
+  position: absolute;
+  top: -30px;
+  right: 10px;
+  &::before{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 62px;
+    height: 45.75px;
+    background: url('../public/img/船槳.png') no-repeat center center;
+    bottom: 10px;
+    right: 0;
+    transform: rotate(15deg);
+    animation: sup 1s linear infinite alternate;
+  }
+  .bubble{
+    width: 80px;
+    height: 64px;
+    top: 0;
+    right: 0;
+    position: absolute;
+    &::before{
+      content: '';
+      display: block;
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: url('../public/img/泡泡\ \(1\).png') no-repeat center center;
+      right: 20px;
+      // transform: translate(0px,-10px);
+      animation: bubbleSmall 3s linear infinite;
+    }
+    &::after{
+      content: '';
+      display: block;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('../public/img/泡泡.png') no-repeat center center;
+      right: 25px;
+      bottom: 35px;
+      animation: bubbleBig 3s linear infinite;
+      animation-delay: 3s;
+    }
+  }
+  
+}
+@keyframes bubbleSmall {
+  0%{
+    transform: translate(0px,0px);
+    z-index: -1;
+  }
+  25%{
+    transform: translate(0px,-15px);
+    z-index: 1;
+  }
+  50%{
+    transform: translate(10px,-30px);
+  }
+  100%{
+    transform: translate(20px,-50px);
+  }
+}
+@keyframes bubbleBig {
+  0%{
+    transform: translate(0px,0px);
+    z-index: -1;
+  }
+  33%{
+    transform: translate(0px,-15px);
+    z-index: 1;
+  }
+  66%{
+    transform: translate(10px,-25px);
+  }
+  100%{
+    transform: translate(20px,-35px);
+  }
+}
+@keyframes sup {
+  0%{
+    transform: rotate(0deg);
+  }
+  50%{
+    transform: rotate(15deg);
+  }
+  100%{
+    transform: rotate(30deg);
+  }
+}
+.fireworks{
+  width: 75px;
+  height: 64.7px;
+  background: url('../public//img/sup煙火.png') no-repeat center center;
+  position: absolute;
+  bottom: -40px;
+  left: 30px;
+  &::before{
+    content: '';
+    display: block;
+    position: absolute;
+    background: url('../public/img/煙火.png') no-repeat center center;
+    width: 58px;
+    height: 58px;
+    left: -30px;
+    bottom: -5px;
+    z-index: 5;
+    animation: fire 1.5s linear infinite;
+  }
+}
+@keyframes fire {
+  0%{
+    transform: scale(0.5);
+  }
+  50%{
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100%{
+    transform: scale(1);
+    opacity: 0.4;
   }
 }
 .waves {
@@ -147,6 +275,7 @@
         background: url("../public/img/turtle.png") no-repeat center center;
         top: -15px;
         right: -40px;
+        animation: turtle 1s linear infinite alternate;
       }
     }
   }
@@ -184,10 +313,11 @@
       margin: 5px 0 0 10px;
     }
   }
-  button {
+  .default {
     border: none;
     padding: 16px 20px;
-    width: 170px;
+    width: 200px;
+    height: 57px;
     background: #b57556;
     box-shadow: 0px 4px 10px rgba(40, 35, 35, 0.35),
       0px -4px 10px rgba(255, 255, 255, 0.9);
@@ -199,6 +329,44 @@
     cursor: pointer;
     letter-spacing: 5px;
     text-indent: 10px;
+    animation: submit 1s linear infinite alternate;
+    position: relative;
+    +p{
+      height: 16px;
+      color: #E06D6D;
+      margin-top: 15px;
+    }
+  }
+  .failure{
+    color: #FFE3E3;
+    text-indent: 30px;
+      &::before{
+        content: '';
+        display: block;
+    position:absolute;
+    width: 24px;
+    height: 24px;
+    background: url('../public/img/failure.png') no-repeat center center;
+    top: 17px;
+    left: 30px;
+    }
+  }
+}
+
+@keyframes turtle {
+  0%{
+    transform: rotate(-15deg);
+  }
+  100%{
+    transform: rotate(0deg);
+  }
+}
+@keyframes submit{
+  0%{
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(1.1)
   }
 }
 .three {

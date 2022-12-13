@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import "./work.scss";
 function Work() {
+  //可控元件
   const [inputForm, setInputForm] = useState({
     name: "",
     phone: "",
@@ -16,6 +17,14 @@ function Work() {
     store: "",
     pay: "",
   });
+  //表單錯誤時的狀態
+  const [failure, setFailure] = useState(false);
+  //submit className切換
+  const [submitClass, setSubmitClass] = useState({
+    text: "submit",
+    status: "default",
+  });
+  //點form移動的位置
   const form = useRef(null);
   //只能輸入中文英文
   const nameVerify = /^[\u4e00-\u9fa5]+$|^[a-zA-Z\s]+$/;
@@ -34,6 +43,12 @@ function Work() {
   };
   const invalid = (e) => {
     e.preventDefault();
+    setFailure(true);
+    setSubmitClass({
+      ...submitClass,
+      text: "failure",
+      status: "default failure",
+    });
     const { name, phone, amount, pay, store } = inputForm;
     if (name === "") {
       setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
@@ -96,6 +111,10 @@ function Work() {
             FORM
           </div>
           <div className="firstMain">
+            <div className="sup">
+              <div className="bubble" />
+            </div>
+            <div className="fireworks" />
             <h2>paragraph</h2>
             <p>1.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             <h2>paragraph</h2>
@@ -204,7 +223,8 @@ function Work() {
                 <span>{errorMes.pay}</span>
               </div>
             </fieldset>
-            <button>submit</button>
+            <button className={submitClass.status}>{submitClass.text}</button>
+            <p>{failure && "This person does not exist"}</p>
           </form>
         </div>
         <div className="three">
