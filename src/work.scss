@@ -163,7 +163,8 @@
       }
     }
     select,
-    input {
+    input,
+    datalist {
       width: 768px;
       height: 45px;
       border: none;
@@ -176,7 +177,7 @@
       appearance: none;
       background: url("../public/img/dropdown.png") no-repeat center right 10px;
     }
-    span{
+    span {
       height: 12px;
       font-size: 10px;
       color: red;

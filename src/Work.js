@@ -126,10 +126,35 @@ function Work() {
               <legend>FORM</legend>
               <div className="content">
                 <label htmlFor="">store</label>
-                <select name="store" id="" required onChange={(e) => post(e)}>
+                <input
+                  list="datalist"
+                  required
+                  name="store"
+                  onChange={(e) => post(e)}
+                  value={inputForm.store}
+                  onKeyDown={(e) => {
+                    const str = [
+                      "s",
+                      "t",
+                      "o",
+                      "r",
+                      "e",
+                      "1",
+                      "2",
+                      "3",
+                      "Backspace",
+                    ];
+                    if (!str.includes(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
+                <datalist id="datalist">
                   <option value="">請選擇商店</option>
-                  <option value="1">1</option>
-                </select>
+                  <option value="store1">store1</option>
+                  <option value="store2">store2</option>
+                  <option value="store3">store3</option>
+                </datalist>
                 <span>{errorMes.store}</span>
               </div>
               <div className="content">
