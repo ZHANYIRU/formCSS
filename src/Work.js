@@ -17,10 +17,9 @@ function Work() {
     store: "",
     pay: "",
   });
-  //表單錯誤時的狀態
-  const [failure, setFailure] = useState(false);
   //submit className切換
   const [submitClass, setSubmitClass] = useState({
+    p: "",
     text: "submit",
     status: "default",
   });
@@ -32,62 +31,56 @@ function Work() {
   const num = /^[0-9]+$/;
   const phoneFormat = /^09[0-9]{8}$/;
   const post = (e) => {
+    //輸入的時候清空error訊息
     setErrorMes({
       ...errorMes,
       [e.target.name]: "",
+    });
+    //輸入的時候先變回來
+    setSubmitClass({
+      ...submitClass,
+      p: "",
+      text: "submit",
+      status: "default",
     });
     setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
   const submit = (e) => {
     e.preventDefault();
   };
+  const blur = (e) => {
+    if (e.target.value === "") {
+      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
+    }
+  };
   const invalid = (e) => {
     e.preventDefault();
-    setFailure(true);
     setSubmitClass({
       ...submitClass,
+      p: "This person does not exist",
       text: "failure",
       status: "default failure",
     });
-    const { name, phone, amount, pay, store } = inputForm;
-    if (name === "") {
+    const { name, phone, amount } = inputForm;
+    if (inputForm[e.target.name] === "" || inputForm[e.target.name] === 0) {
       setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
+      return;
     } else {
       if (!nameVerify.test(name)) {
         setErrorMes({ ...errorMes, name: "只能輸入中、英文" });
-        return;
-      }
-    }
-    if (phone === "") {
-      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
-    } else {
-      if (!num.test(phone)) {
+      } else if (!num.test(phone)) {
         setErrorMes({ ...errorMes, phone: "只能輸入數字" });
-        return;
-      }
-      if (!phoneFormat.test(phone) && phone.length < 10) {
+      } else if (!phoneFormat.test(phone) || phone.length < 10) {
         setErrorMes({ ...errorMes, phone: "格式不正確，例：0987654321" });
-        return;
-      }
-    }
-    if (amount === "") {
-      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
-    } else {
-      const newAmount = +amount;
-      if (newAmount < 0) {
-        setErrorMes({ ...errorMes, amount: "最小只能輸入0" });
-        return;
-      }
-      if (!num.test(amount)) {
+      } else if (!num.test(amount)) {
         setErrorMes({ ...errorMes, amount: "只能輸入數字" });
-        return;
+      } else {
+        setSubmitClass({
+          ...submitClass,
+          text: "success",
+          status: "default success",
+        });
       }
-    }
-    if (pay === "") {
-      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
-    }
-    if (store === "") {
-      setErrorMes({ ...errorMes, [e.target.name]: "*為必填項目" });
     }
   };
   return (
@@ -167,6 +160,7 @@ function Work() {
                       e.preventDefault();
                     }
                   }}
+                  onBlur={blur}
                 />
                 <datalist id="datalist">
                   <option value="">請選擇商店</option>
@@ -185,37 +179,50 @@ function Work() {
                   name="name"
                   value={inputForm.name}
                   onChange={(e) => post(e)}
+                  pattern={/^[\u4e00-\u9fa5]+$|^[a-zA-Z\s]+$/}
+                  onBlur={blur}
                 />
                 <span>{errorMes.name}</span>
               </div>
               <div className="content">
                 <label htmlFor="">phone</label>
                 <input
-                  type="tel"
+                  type="number"
                   placeholder="請輸入電話"
                   required
                   name="phone"
                   value={inputForm.phone ? inputForm.phone : ""}
                   maxLength={10}
                   onChange={(e) => post(e)}
+                  onBlur={blur}
+                  // pattern={/^09[0-9]{8}$/}
                 />
                 <span>{errorMes.phone}</span>
               </div>
               <div className="content">
                 <label htmlFor="">Amount of consumption</label>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="請輸入數量"
                   required
                   name="amount"
-                  value={inputForm.amount ? inputForm.amount : ""}
+                  value={inputForm.amount}
                   onChange={(e) => post(e)}
+                  // pattern={/[0-9]/}
+                  onKeyDown={(e) => e.key === "-" && e.preventDefault()}
+                  onBlur={blur}
                 />
                 <span>{errorMes.amount}</span>
               </div>
               <div className="content">
                 <label htmlFor="">payment</label>
-                <select name="pay" id="" required onChange={(e) => post(e)}>
+                <select
+                  name="pay"
+                  id=""
+                  required
+                  onChange={(e) => post(e)}
+                  onBlur={blur}
+                >
                   <option value="">請選擇付款方式</option>
                   <option value="digital payment">digital payment</option>
                   <option value="ATM">ATM</option>
@@ -224,7 +231,9 @@ function Work() {
               </div>
             </fieldset>
             <button className={submitClass.status}>{submitClass.text}</button>
-            <p>{failure && "This person does not exist"}</p>
+            <p>
+              {submitClass.p === "This person does not exist" && submitClass.p}
+            </p>
           </form>
         </div>
         <div className="three">
