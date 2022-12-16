@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/formCSS/static/css/main.7fe4e41a.css",
+    "main.js": "/formCSS/static/js/main.a7dd90e8.js",
+    "static/js/787.3386b701.chunk.js": "/formCSS/static/js/787.3386b701.chunk.js",
+    "static/media/抽獎沙子.png": "/formCSS/static/media/抽獎沙子.957dc05a4e0fe2eca9eb.png",
+    "static/media/market.png": "/formCSS/static/media/market.6d12283441d345733bae.png",
+    "static/media/白色海浪.png": "/formCSS/static/media/白色海浪.6b4e815ee5292a2d5683.png",
+    "index.html": "/formCSS/index.html",
+    "main.7fe4e41a.css.map": "/formCSS/static/css/main.7fe4e41a.css.map",
+    "main.a7dd90e8.js.map": "/formCSS/static/js/main.a7dd90e8.js.map",
+    "787.3386b701.chunk.js.map": "/formCSS/static/js/787.3386b701.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7fe4e41a.css",
+    "static/js/main.a7dd90e8.js"
+  ]
+}
