@@ -161,6 +161,9 @@ function Work() {
                     }
                   }}
                   onBlur={blur}
+                  style={{
+                    border: errorMes.store !== "" && "3px solid #E06D6D",
+                  }}
                 />
                 <datalist id="datalist">
                   <option value="">請選擇商店</option>
@@ -181,13 +184,17 @@ function Work() {
                   onChange={(e) => post(e)}
                   pattern={/^[\u4e00-\u9fa5]+$|^[a-zA-Z\s]+$/}
                   onBlur={blur}
+                  style={{
+                    border: errorMes.name !== "" && "3px solid #E06D6D",
+                  }}
                 />
                 <span>{errorMes.name}</span>
               </div>
               <div className="content">
                 <label htmlFor="">phone</label>
                 <input
-                  type="number"
+                  type="text"
+                  inputmode="numeric"
                   placeholder="請輸入電話"
                   required
                   name="phone"
@@ -195,22 +202,27 @@ function Work() {
                   maxLength={10}
                   onChange={(e) => post(e)}
                   onBlur={blur}
-                  // pattern={/^09[0-9]{8}$/}
+                  style={{
+                    border: errorMes.phone !== "" && "3px solid #E06D6D",
+                  }}
                 />
                 <span>{errorMes.phone}</span>
               </div>
               <div className="content">
                 <label htmlFor="">Amount of consumption</label>
                 <input
-                  type="number"
-                  placeholder="請輸入數量"
+                  type="text"
+                  inputmode="numeric"
+                  placeholder="請輸入消費金額"
                   required
                   name="amount"
                   value={inputForm.amount}
                   onChange={(e) => post(e)}
-                  // pattern={/[0-9]/}
                   onKeyDown={(e) => e.key === "-" && e.preventDefault()}
                   onBlur={blur}
+                  style={{
+                    border: errorMes.amount !== "" && "3px solid #E06D6D",
+                  }}
                 />
                 <span>{errorMes.amount}</span>
               </div>
@@ -222,6 +234,9 @@ function Work() {
                   required
                   onChange={(e) => post(e)}
                   onBlur={blur}
+                  style={{
+                    border: errorMes.pay !== "" && "3px solid #E06D6D",
+                  }}
                 >
                   <option value="">請選擇付款方式</option>
                   <option value="digital payment">digital payment</option>

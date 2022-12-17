@@ -386,13 +386,19 @@
     select,
     input,
     datalist {
-      height: 45px;
+      height: 57px;
       border: none;
       outline: none;
       border: 1px solid #204379;
       border-radius: 20px;
       padding: 8px 16px;
+      &:focus{
+        border: 3px solid #93BBF9;
+      }
     }
+    // input:focus{
+    //   border: 3px solid #93BBF9;
+    // }
     select {
       appearance: none;
       background: url("../public/img/dropdown.png") no-repeat center right 10px;
